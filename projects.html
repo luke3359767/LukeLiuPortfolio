@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luke Liu | My Projects</title>
+    <style>
+        :root {
+            --primary: #00ffea;
+            --primary-dark: #00b7a8;
+            --secondary: #ff007a;
+            --dark: #0a0e1a;
+            --light: #1c2526;
+            --gray: #8b8b9e;
+            --border: #2a2f4f;
+            --accent: #b300ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            color: var(--gray);
+            background-color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--dark);
+            color: var(--primary);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 255, 234, 0.2);
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--primary);
+            animation: neon-flicker 2s infinite alternate;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+            opacity: 0;
+            animation: slide-in 0.5s ease forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+        
+        .nav-links li:nth-child(1) { --i: 1; }
+        .nav-links li:nth-child(2) { --i: 2; }
+        
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+            text-shadow: 0 0 8px var(--secondary);
+            animation: glitch 0.3s linear;
+        }
+        
+        .projects-section {
+            padding: 10rem 0 5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--border) 100%);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary);
+            margin-bottom: 3rem;
+            animation: neon-flicker 3s infinite alternate;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .project-card {
+            background-color: var(--dark);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 255, 234, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fade-up 0.8s ease forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+        
+        .project-card:nth-child(1) { --i: 1; }
+        .project-card:nth-child(2) { --i: 2; }
+        .project-card:nth-child(3) { --i: 3; }
+        .project-card:nth-child(4) { --i: 4; }
+        .project-card:nth-child(5) { --i: 5; }
+        .project-card:nth-child(6) { --i: 6; }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(0, 255, 234, 0.4);
+        }
+        
+        .project-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            border-bottom: 1px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 122, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .project-card:hover .project-image::after {
+            opacity: 1;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .project-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .project-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        
+        .project-links a:hover {
+            color: var(--accent);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--secondary);
+            background-color: var(--accent);
+            animation: pulse 0.5s;
+        }
+        
+        .back-to-home {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: var(--gray);
+            padding: 1.5rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        
+        /* Animations */
+        @keyframes neon-flicker {
+            0%, 100% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
+            50% { text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary); }
+        }
+        
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+        
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Luke Liu</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="projects-section">
+        <div class="container">
+            <h1>My Projects</h1>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-image" style="background-color: var(--primary);"></div>
+                    <div class="project-content">
+                        <h3>PT Sort Algorithm</h3>
+                        <p>A non-comparison sort algorithm using the sum of the power of two, documented in an unofficial research paper.</p>
+                        <div class="project-links">
+                            <a href="https://vixra.org/abs/2110.0002" target="_blank">View Research Paper</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background-color: var(--secondary);"></div>
+                    <div class="project-content">
+                        <h3>TermHousing Platform</h3>
+                        <p>A startup solution designed to solve housing problems for co-op students, featuring property listings and roommate matching.</p>
+                        <div class="project-links">
+                            <a href="#">Case Study</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background-color: var(--accent);"></div>
+                    <div class="project-content">
+                        <h3>Web Development Portfolio</h3>
+                        <p>Collection of client websites and applications built during my work as a web development contractor at DL Web Designs.</p>
+                        <div class="project-links">
+                            <a href="#">View Projects</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background-color: var(--primary-dark);"></div>
+                    <div class="project-content">
+                        <h3>E-Commerce Platform</h3>
+                        <p>A full-stack e-commerce solution with React frontend, Node.js backend, and AWS hosting.</p>
+                        <div class="project-links">
+                            <a href="#">Live Demo</a>
+                            <a href="#">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background-color: var(--secondary);"></div>
+                    <div class="project-content">
+                        <h3>Flight Tracker App</h3>
+                        <p>A mobile app for tracking flights in real-time, leveraging my Private Pilot License knowledge.</p>
+                        <div class="project-links">
+                            <a href="#">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image" style="background-color: var(--accent);"></div>
+                    <div class="project-content">
+                        <h3>AI Chatbot</h3>
+                        <p>An AI-powered chatbot built with AWS AI services and integrated into a web application.</p>
+                        <div class="project-links">
+                            <a href="#">Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="back-to-home">
+                <a href="index.html" class="btn">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Luke Liu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for triggering animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.project-card').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

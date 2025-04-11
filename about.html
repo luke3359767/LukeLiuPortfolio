@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luke Liu | About Me</title>
+    <style>
+        :root {
+            --primary: #00ffea;
+            --primary-dark: #00b7a8;
+            --secondary: #ff007a;
+            --dark: #0a0e1a;
+            --light: #1c2526;
+            --gray: #8b8b9e;
+            --border: #2a2f4f;
+            --accent: #b300ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            color: var(--gray);
+            background-color: var(--dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--dark);
+            color: var(--primary);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 255, 234, 0.2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--primary);
+            animation: neon-flicker 2s infinite alternate;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+            opacity: 0;
+            animation: slide-in 0.5s ease forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        .nav-links li:nth-child(1) { --i: 1; }
+        .nav-links li:nth-child(2) { --i: 2; }
+        .nav-links li:nth-child(3) { --i: 3; }
+        .nav-links li:nth-child(4) { --i: 4; }
+        .nav-links li:nth-child(5) { --i: 5; }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+            text-shadow: 0 0 8px var(--secondary);
+            animation: glitch 0.3s linear;
+        }
+
+        .about-section {
+            padding: 10rem 0 5rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--border) 100%);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            text-align: center;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary);
+            margin-bottom: 3rem;
+            animation: neon-flicker 3s infinite alternate;
+        }
+
+        .about-intro {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fade-up 0.8s ease forwards;
+        }
+
+        .profile-image {
+            flex: 0 0 250px;
+            text-align: center;
+        }
+
+        .profile-image img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 255, 234, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .profile-image img:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 30px var(--secondary);
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .about-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+
+        .about-content .highlight {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .milestones {
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .milestones h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .milestone-item {
+            margin-bottom: 2rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--primary);
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: fade-in-left 0.8s ease forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .milestone-item:nth-child(1) { --i: 1; }
+        .milestone-item:nth-child(2) { --i: 2; }
+        .milestone-item:nth-child(3) { --i: 3; }
+
+        .milestone-item:before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            animation: pulse 2s infinite;
+        }
+
+        .milestone-date {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+        }
+
+        .milestone-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .milestone-description {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto 4rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 234, 0.2);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: zoom-in 0.8s ease forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .gallery-item:nth-child(1) { --i: 1; }
+        .gallery-item:nth-child(2) { --i: 2; }
+        .gallery-item:nth-child(3) { --i: 3; }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255, 0, 122, 0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .back-to-home {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px var(--secondary);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px var(--secondary);
+            background-color: var(--accent);
+            animation: pulse 0.5s;
+        }
+
+        footer {
+            background-color: var(--dark);
+            color: var(--gray);
+            padding: 1.5rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Animations */
+        @keyframes neon-flicker {
+            0%, 100% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
+            50% { text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary); }
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        @keyframes slide-in {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fade-in-left {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes zoom-in {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 900px) {
+            .about-intro {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-image {
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-links {
+                display: none;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-content p {
+                font-size: 1rem;
+            }
+
+            .profile-image img {
+                width: 150px;
+                height: 150px;
+            }
+
+            .gallery-item img {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Luke Liu</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="about-section">
+        <div class="container">
+            <h1>About Me</h1>
+            <div class="about-intro">
+                <div class="profile-image">
+                    <img src="./img/cat.png" alt="Luke Liu Profile">
+                </div>
+                <div class="about-content">
+                    <p>Hi, I'm <span class="highlight">Luke Liu</span>, a full-stack developer and project manager with a passion for creating innovative solutions. Based in Canada, I balance my love for coding with diverse interests like <span class="highlight">playing computer games</span> and exploring <span class="highlight">investment opportunities</span>.</p>
+                    <p>With a <span class="highlight">PMP certification</span>, I bring structure and leadership to every project. Outside of tech, I’m a musician who plays the <span class="highlight">guitar and piano</span>, and as a licensed pilot, I soar through the skies <span class="highlight">flying planes</span>. These passions fuel my creativity and drive to tackle challenges from unique perspectives.</p>
+                </div>
+            </div>
+
+            <div class="milestones">
+                <h2>My Journey</h2>
+                <div class="milestone-item">
+                    <div class="milestone-date">2019</div>
+                    <div class="milestone-title">Started Flying Planes</div>
+                    <div class="milestone-description">Obtained my Private Pilot License, fulfilling a lifelong dream and learning to navigate the skies with precision.</div>
+                </div>
+                <div class="milestone-item">
+                    <div class="milestone-date">2022</div>
+                    <div class="milestone-title">Dived into Investment</div>
+                    <div class="milestone-description">Began exploring financial markets and investment strategies, applying analytical skills to grow my portfolio.</div>
+                </div>
+                <div class="milestone-item">
+                    <div class="milestone-date">2025</div>
+                    <div class="milestone-title">Earned PMP Certification</div>
+                    <div class="milestone-description">Completed my Project Management Professional certification, equipping me with skills to lead complex projects efficiently.</div>
+                </div>
+            </div>
+
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="./img/lol.png" alt="Gaming">
+                </div>
+                <div class="gallery-item">
+                    <img src="./img/piano.png" alt="Piano Performance">
+                </div>
+                <div class="gallery-item">
+                    <img src="./img/plane.png" alt="Flying Plane">
+                </div>
+            </div>
+
+            <div class="back-to-home">
+                <a href="index.html" class="btn">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Luke Liu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for triggering animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.about-intro, .milestone-item, .gallery-item').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
